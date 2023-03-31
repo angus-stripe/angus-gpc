@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Angus GPC",
+  "description": "Angus's GPC extension",
+  "version": "1.0",
+  "action": {
+    "default_popup": "hello.html",
+    "default_icon": "hello_extensions.png"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "webRequest",
+    "webNavigation",
+    "storage",
+    "activeTab",
+    "cookies",
+    "tabs",
+    "scripting"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "universal_GPC",
+        "enabled": true,
+        "path": "universal_gpc_rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["content-scripts/injection/gpc-dom.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "incognito": "spanning",
+  "background": {
+    "service_worker": "background/listeners.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-eval'; object-src 'self'"
+  }
+}
